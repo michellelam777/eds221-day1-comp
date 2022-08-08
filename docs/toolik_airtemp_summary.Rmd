@@ -51,10 +51,19 @@ I don't want to deal with those capital letters. These aren't even bad looking c
 ```{r}
 toolik_weather <- toolik_weather %>% clean_names() # What does this do? Say it in words.
 
-# What is this %>% thing? Meet the pipe operator! Also, as of a couple months ago, |> is a native pipe operator (versus %>%, which comes along with the tidyverse)
+# What is this %>% thing? Meet the pipe operator! Also, as of a couple months ago, |> is a native pipe operator (versus %>%, which comes along with the tidyverse). 
 
 # Now what are the column names?
 ```
+
+Pipe operator allows us to type in the order we want to process. 
+Instead of mutate(select(filter(obj))) it would be 
+obj %>% 
+filter() %>% 
+select() %>% 
+mutate()
+
+Shortcut to insert pipe operator is command + shift + m
 
 ```{r}
 names(toolik_weather)
@@ -68,7 +77,7 @@ Let's make a jitterplot of temperatures by month.
 ```{r}
 toolik_temp_plot <- ggplot(data = toolik_weather, aes(x = as.factor(month), y = daily_air_temp_mean_c)) +
   geom_jitter(aes(color = daily_air_temp_mean_c), show.legend = FALSE) +
-  scale_color_gradient(low = "blue", high = "orange") +
+  scale_color_gradient(low = "blue", high = "red") +
   theme_minimal() +
   labs(title = "Toolik Station daily air temperature",
        x = "Month",
@@ -78,7 +87,7 @@ toolik_temp_plot
 ```
 
 ## Export a figure
-
+ggsave uses last created graph in the code. To specify plot to save in ggsave use plot = plot name here
 ```{r}
 ggsave(here::here("figs", "toolik_temp_plot.png"), height = 6, width = 7)
 ```
